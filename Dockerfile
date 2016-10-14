@@ -40,7 +40,7 @@ ADD scripts/services.conf /services.conf
 ADD playbooks/roles /etc/ansible/roles
 ADD playbooks/supervisor.yaml /etc/ansible/supervisor.yaml
 ADD playbooks/factorio.yaml /etc/ansible/factorio.yaml
-ADD playbooks/factorio.yaml /etc/ansible/factorio_map.yaml
+ADD playbooks/factorio_map.yaml /etc/ansible/factorio_map.yaml
 ADD playbooks/server-settings.jinja /opt/factorio/server-settings.jinja
 ADD playbooks/map-get-settings.jinja /opt/factorio/map-get-settings.jinja
 
