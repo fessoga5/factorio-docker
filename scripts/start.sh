@@ -19,30 +19,16 @@ fi
 ./get_install_factorio.sh
 
 
-# SUPERVISOR
-# Supervisor configurate
-SupervisorTemplateGenerate(){
-	# $1 = program name, $2 = command
-	PROGRAM_NAME=${1}
-	TEMPLATE_LIST=${2}
-	TEMPLATE_SUPERVISOR="[program:$PROGRAM_NAME]\ncommand=$TEMPLATE_LIST\nautostart=true\nautorestart=true\nstartretries=100000000\nstdout_logfile=syslog\nstderr_logfile=syslog\n"
-	logger -t "Preconfigure" "Add supervisor program name: $PROGRAM_NAME, command:  $TEMPLATE_LIST"
-	echo "Add supervisor program name: $PROGRAM_NAME, command:  $TEMPLATE_LIST"
-	printf "$TEMPLATE_SUPERVISOR" > /etc/supervisor/conf.d/$PROGRAM_NAME
-}
 # Services
+echo "127.0.0.1" >> /etc/ansible/hosts
+# Generate factorio config files
+ansible-playbook factorio.yaml --connection=local
+ansible-playbook factorio_map.yaml --connection=local
+# Create map
+/opt/factorio/bin/x64/factorio --create /opt/factorio/world.zip --map-gen-settings map-generation.json
 
-cat services.conf | while read line;
-do
-	array=(${line})
-	SERVICENAME=${array[0]}
-	SERVICECMD=${array[@]/$SERVICENAME}
-	#"${!SERVICENAME}"
-	
-	if [ ${!SERVICENAME:="True"} = "True" ]; then
-		SupervisorTemplateGenerate "$SERVICENAME" "$SERVICECMD"
-	fi
-done
+# Configure supervisord for factorio
+ansible-playbook supervisor.yaml --connection=local
 
 # Start supervisord and services
 /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf

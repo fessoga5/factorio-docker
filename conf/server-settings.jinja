@@ -1,0 +1,23 @@
+{
+  "name": "{{ name }}",
+  "description": "{{ description }}",
+  "tags": ["game", "tags"],
+  "max_players": "{{ max_players }}",
+
+  "_comment_visibility": ["public: Game will be published on the official Factorio matching server",
+                          "lan: Game will be broadcast on LAN",
+                          "hidden: Game will not be published anywhere"],
+  "visibility": "{{ visibility }}",
+
+  "_comment_credentials": "{{ _comment_credentials }}",
+  "username": "{{ username }}",
+  "password": "{{ password }}",
+
+  "_comment_token": "{{ _comment_token }}",
+  "token": "{{ token }}",
+
+  "game_password": "{{ game_password }}",
+
+  "_comment_verify_user_identity": "{{ _comment_verify_user_identity }}",
+  "verify_user_identity": {{ verify_user_identity | default('true', true) }}
+}

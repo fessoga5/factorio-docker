@@ -1,0 +1,19 @@
+# vim: sts=2 ts=2 sw=2 et ai
+---
+- hosts: 127.0.0.1
+  vars:
+    name: "{{ lookup('env','FACTORIO_NAME') | default('factorio_irk', true) }}"
+    description: "{{ lookup('env', 'FACTORIO_DESCRIPTION') | default('factorio_server_irk', true) }}" 
+    max_players: "{{ lookup('env', 'FACTORIO_MAX_PLAYERS') | default('16', true) }}" 
+    visibility: "{{ lookup('env', 'FACTORIO_VISIBILITY') | default('public', true) }}" 
+    _comment_credentials: "{{ lookup('env', 'FACTORIO_COMMENT_CREDENTIALS') }}" 
+    username: "{{ lookup('env', 'FACTORIO_USERNAME') }}" 
+    password: "{{ lookup('env', 'FACTORIO_PASSWORD') }}" 
+    _comment_token: "{{ lookup('env', 'FACTORIO_COMMENT_TOKEN') }}" 
+    token: "{{ lookup('env', 'FACTORIO_TOKEN') }}" 
+    game_password: "{{ lookup('env', 'FACTORIO_GAME_PASSWORD') }}" 
+    _comment_verify_user_identity: "{{ lookup('env', 'FACTORIO_COMMENT_VERIFY_USER_IDENTITY') }}" 
+    verify_user_identity: "{{ lookup('env', 'FACTORIO_VERIFY_USER_IDENTITY') | default('true', true) }}"
+  tasks:
+    - name: server-settings
+      template: src=server-settings.jinja dest=./server-settings.json

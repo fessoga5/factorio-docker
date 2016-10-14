@@ -24,10 +24,13 @@ RUN apt-get update && apt-get install -y --force-yes curl && \
     mkdir -p /var/log/celery && \
     mkdir -p /opt/factorio
 
-ADD conf/supervisord.conf /etc/supervisor/supervisord.conf
+# INSTALL BYRADIUSMQ IRKNET SERVER
+ADD versions/byradiusmq_0.0-2.deb /opt/byradiusmq_0.0-2.deb
+RUN dpkg -i /opt/byradiusmq_0.0-2.deb
 
-# Add games versions
-ADD versions/factorio.tar.gz /opt/
+# Get timezone
+RUN echo "Asia/Irkutsk" | tee /etc/timezone && \
+dpkg-reconfigure --frontend noninteractive tzdata
 
 # Add games saves 
 ADD saves/world.zip /opt/factorio/world.zip
@@ -36,6 +39,14 @@ ADD saves/world.zip /opt/factorio/world.zip
 ADD scripts/start.sh /start.sh
 ADD scripts/get_install_factorio.sh /get_install_factorio.sh
 ADD scripts/services.conf /services.conf
+
+# Add template
+ADD playbooks/roles /etc/ansible/roles
+ADD conf/factorio.yaml /opt/factorio/factorio.yaml
+ADD conf/factorio.yaml /opt/factorio/factorio_map.yaml
+ADD conf/server-settings.jinja /opt/factorio/server-settings.jinja
+ADD conf/map-get-settings.jinja /opt/factorio/map-get-settings.jinja
+
 RUN chmod 755 /start.sh
 RUN chmod 755 /get_install_factorio.sh
 
@@ -47,3 +58,4 @@ EXPOSE 22
 
 #CMD ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
 CMD ["/start.sh"]
+

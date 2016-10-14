@@ -1,0 +1,23 @@
+{
+  "name": "factorio_irk",
+  "description": "factorio_server_irk",
+  "tags": ["game", "tags"],
+  "max_players": "16",
+
+  "_comment_visibility": ["public: Game will be published on the official Factorio matching server",
+                          "lan: Game will be broadcast on LAN",
+                          "hidden: Game will not be published anywhere"],
+  "visibility": "public",
+
+  "_comment_credentials": "",
+  "username": "",
+  "password": "",
+
+  "_comment_token": "",
+  "token": "",
+
+  "game_password": "",
+
+  "_comment_verify_user_identity": "",
+  "verify_user_identity": true
+}

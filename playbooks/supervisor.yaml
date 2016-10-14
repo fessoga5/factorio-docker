@@ -1,0 +1,24 @@
+#
+# vim: sts=2 ts=2 sw=2 et ai
+---
+- hosts: 127.0.0.1
+  roles:
+    - supervisor
+
+  vars:
+    supervisor_state: stopped
+    supervisor_programs_present:
+      factorio:
+        command: '/opt/factorio/bin/x64/factorio --start-server-load-latest --server-settings /opt/factorio/server-settings.json /opt/factorio/world.zip'
+        autostart: true
+        autorestart: true
+        startretries: 100000000
+        stdout_logfile: syslog
+        stderr_logfile: syslog
+
+    supervisor_groups_present:
+      services: 
+        programs:
+          - freeradius
+        priority: 10
+        #user: vagrant

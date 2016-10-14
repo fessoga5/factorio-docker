@@ -1,0 +1,44 @@
+# vim: sts=2 ts=2 sw=2 et ai
+# {
+# "_comment": "Sizes can be specified as none, very-low, low, normal, high, very-high",
+# "terrain_segmentation": "normal",
+# "water": "normal",
+# "width": 0,
+# "height": 0,
+# "starting_area": "normal",
+# "peaceful_mode": false,
+# "autoplace_controls":
+# {
+# "coal": {"frequency": "normal", "size": "normal", "richness": "normal"},
+# "copper-ore": {"frequency": "normal", "size": "normal", "richness": "normal"},
+# "crude-oil": {"frequency": "normal", "size": "normal", "richness": "normal"},
+# "enemy-base": {"frequency": "normal", "size": "normal", "richness": "normal"},
+# "iron-ore": {"frequency": "normal", "size": "normal", "richness": "normal"},
+# "stone": {"frequency": "normal", "size": "normal", "richness": "normal"}
+# }
+# }
+---
+- hosts: 127.0.0.1
+  vars:
+    str_coal: '{"frequency": "normal", "size": "normal", "richness": "normal"}'
+    str_copperore: {"frequency": "normal", "size": "normal", "richness": "normal"}
+    str_crudeoil: {"frequency": "normal", "size": "normal", "richness": "normal"}
+    str_enemybase: {"frequency": "normal", "size": "normal", "richness": "normal"}
+    str_ironore: {"frequency": "normal", "size": "normal", "richness": "normal"}
+    str_stone: {"frequency": "normal", "size": "normal", "richness": "normal"}
+    terrain_segmentation: "{{ lookup('env', 'FACTORIO_MAP_TERRAIN_SEGMENTATION') | default('Custom Map generate from https://github.com/fessoga5/factorio-docker.git', true) }}"
+    water: "{{ lookup('env', 'FACTORIO_MAP_WATER') | default('normal', true) }}"
+    width: "{{ lookup('env', 'FACTORIO_MAP_WIDTH') | default('0', true) }}"
+    height: "{{ lookup('env', 'FACTORIO_MAP_HEIGHT') | default('0', true) }}"
+    starting_area: "{{ lookup('env', 'FACTORIO_MAP_STARTING_AREA') | default('normal', true) }}"
+    peaceful_mode: "{{ lookup('env', 'FACTORIO_MAP_PEACEFUL_MODE') | default('false,', true) }}"
+    coal: "{{ lookup('env', 'FACTORIO_MAP_COAL') | default(str_coal, true) }}"
+    copperore: "{{ lookup('env', 'FACTORIO_MAP_COPPER-ORE') | default(str_copperore, true) }}"
+    crudeoil: "{{ lookup('env', 'FACTORIO_MAP_CRUDE-OIL') | default(str_crudeoil, true) }}"
+    enemybase: "{{ lookup('env', 'FACTORIO_MAP_ENEMY-BASE') | default(str_enemybase, true) }}"
+    ironore: "{{ lookup('env', 'FACTORIO_MAP_IRON-ORE') | default(str_ironore, true) }}"
+    stone: "{{ lookup('env', 'FACTORIO_MAP_STONE') | default(str_stone, true) }}"
+    comment: "{{ lookup('env', 'FACTORIO_MAP_COMMENT') | default('Custom map', true) }}"
+  tasks:
+    - name: server-settings
+      template: src=map-get-settings.jinja dest=./map-get-settings.json

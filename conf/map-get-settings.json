@@ -1,0 +1,19 @@
+{
+  "_comment": "Custom map"",
+
+  "terrain_segmentation": "Custom Map generate from https://github.com/fessoga5/factorio-docker.git",
+  "water": "normal",
+  "width": "0",
+  "height": "0",
+  "starting_area": "normal",
+  "peaceful_mode": "false,",
+  "autoplace_controls":
+  {
+    "coal": "{'richness': 'normal', 'frequency': 'normal', 'size': 'normal'}",
+    "copper-ore": "{u'richness': u'normal', u'frequency': u'normal', u'size': u'normal'}",
+    "crude-oil": "{u'richness': u'normal', u'frequency': u'normal', u'size': u'normal'}",
+    "enemy-base": "{u'richness': u'normal', u'frequency': u'normal', u'size': u'normal'}",
+    "iron-ore": "{u'richness': u'normal', u'frequency': u'normal', u'size': u'normal'}",
+    "stone": "{u'richness': u'normal', u'frequency': u'normal', u'size': u'normal'}",
+  }
+}
