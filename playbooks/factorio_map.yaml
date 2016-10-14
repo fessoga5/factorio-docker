@@ -41,4 +41,4 @@
     comment: "{{ lookup('env', 'FACTORIO_MAP_COMMENT') | default('Custom map', true) }}"
   tasks:
     - name: server-settings
-      template: src=map-get-settings.jinja dest=./map-get-settings.json
+      template: src=/opt/factorio/map-get-settings.jinja dest=/opt/factorio/map-get-settings.json

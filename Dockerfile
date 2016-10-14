@@ -16,17 +16,13 @@ RUN apt-get update && apt-get install -y --force-yes curl && \
     git \
     rsyslog \
     python-yaml \
+    python-pip \
+    python-apt \
+    ansible \
     sendmail  && \
     mkdir -p /var/run/sshd && \
-    mkdir -p /home/www && \
-    chown www-data:www-data -R /home/www && \
     mkdir -p /var/log/supervisor && \
-    mkdir -p /var/log/celery && \
     mkdir -p /opt/factorio
-
-# INSTALL BYRADIUSMQ IRKNET SERVER
-ADD versions/byradiusmq_0.0-2.deb /opt/byradiusmq_0.0-2.deb
-RUN dpkg -i /opt/byradiusmq_0.0-2.deb
 
 # Get timezone
 RUN echo "Asia/Irkutsk" | tee /etc/timezone && \
@@ -42,10 +38,11 @@ ADD scripts/services.conf /services.conf
 
 # Add template
 ADD playbooks/roles /etc/ansible/roles
-ADD conf/factorio.yaml /opt/factorio/factorio.yaml
-ADD conf/factorio.yaml /opt/factorio/factorio_map.yaml
-ADD conf/server-settings.jinja /opt/factorio/server-settings.jinja
-ADD conf/map-get-settings.jinja /opt/factorio/map-get-settings.jinja
+ADD playbooks/supervisor.yaml /etc/ansible/supervisor.yaml
+ADD playbooks/factorio.yaml /etc/ansible/factorio.yaml
+ADD playbooks/factorio.yaml /etc/ansible/factorio_map.yaml
+ADD playbooks/server-settings.jinja /opt/factorio/server-settings.jinja
+ADD playbooks/map-get-settings.jinja /opt/factorio/map-get-settings.jinja
 
 RUN chmod 755 /start.sh
 RUN chmod 755 /get_install_factorio.sh

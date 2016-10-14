@@ -19,6 +19,6 @@
     supervisor_groups_present:
       services: 
         programs:
-          - freeradius
+          - factorio
         priority: 10
         #user: vagrant

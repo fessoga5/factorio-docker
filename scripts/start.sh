@@ -22,13 +22,13 @@ fi
 # Services
 echo "127.0.0.1" >> /etc/ansible/hosts
 # Generate factorio config files
-ansible-playbook factorio.yaml --connection=local
-ansible-playbook factorio_map.yaml --connection=local
+ansible-playbook /etc/ansible/factorio.yaml --connection=local
+ansible-playbook /etc/ansible/factorio_map.yaml --connection=local
 # Create map
 /opt/factorio/bin/x64/factorio --create /opt/factorio/world.zip --map-gen-settings map-generation.json
 
 # Configure supervisord for factorio
-ansible-playbook supervisor.yaml --connection=local
+ansible-playbook /etc/ansible/supervisor.yaml --connection=local
 
 # Start supervisord and services
 /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf

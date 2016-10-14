@@ -16,4 +16,4 @@
     verify_user_identity: "{{ lookup('env', 'FACTORIO_VERIFY_USER_IDENTITY') | default('true', true) }}"
   tasks:
     - name: server-settings
-      template: src=server-settings.jinja dest=./server-settings.json
+      template: src=/opt/factorio/server-settings.jinja dest=/opt/factorio/server-settings.json

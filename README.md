@@ -1,7 +1,18 @@
 ## Introduction
 This is a Dockerfile to build a container image for factorio-headless server.
 
+## Structure
+1. Download and untar https://www.factorio.com/get-download/0.13.20/headless/linux64
+2. Create config file for map and game, using ANSIBLE.
+	/opt/factorio/bin/x64/factorio --create /opt/factorio/world.zip --map-gen-settings map-generation.json
+
+3. Start game with via supervisord
+	/opt/factorio/bin/x64/factorio --start-server-load-latest --server-settings /opt/factorio/server-settings.json /opt/factorio/world.zip
+
 ## ENVIRONMENT
+Running with ENV:
+	docker run -e FACTORIO_GAME_PASSWORD="my_password" --name factorio-server-1 factorio-server:latest
+
 Settings for map:
 	"FACTORIO_MAP_COMMENT": "Sizes can be specified as none, very-low, low, normal, high, very-high"
 
@@ -64,14 +75,8 @@ https://www.factorio.com/get-download/0.13.20/headless/linux64
 manual: https://wiki.factorio.com/index.php?title=Multiplayer/ru
 
 ## Create image
-docker build -t factorio:latest .
+docker build -t factorio-server:latest .
 
 ## Start image
-docker run --name test factorio
 
-## Introducing
-Docker start /start.sh, which wget https://www.factorio.com/get-download/0.14.9/headless/linux64 and create command for supervisord /opt/factorio/factorio/bin/x64/factorio --start-server /opt/factorio/world.zip.
-Supervisord start sshd and Factorio server.
-
-## P.S.
-world.zip custom map with very good resources and password 123321
+docker run -e FACTORIO_GAME_PASSWORD="my_password" --name factorio-server-1 factorio-server:latest
